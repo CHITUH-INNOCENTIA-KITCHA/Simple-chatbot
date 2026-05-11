@@ -1,8 +1,12 @@
 import React, { useEffect } from 'react';
+import { View, StyleSheet } from 'react-native';
 import { Slot, useRouter, useSegments } from 'expo-router';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { ThemeProvider } from '../context/ThemeContext';
 import { useAuth } from '../hooks/useAuth';
 import { LoadingSpinner } from '../components/shared/LoadingSpinner';
+import { ErrorBoundary } from '../components/shared/ErrorBoundary';
+import { OfflineBanner } from '../components/shared/OfflineBanner';
 
 function RootLayoutNav() {
   const { user, isLoading } = useAuth();
@@ -27,13 +31,28 @@ function RootLayoutNav() {
     return <LoadingSpinner fullScreen />;
   }
 
-  return <Slot />;
+  return (
+    <View style={styles.container}>
+      <OfflineBanner />
+      <Slot />
+    </View>
+  );
 }
 
 export default function RootLayout() {
   return (
-    <ThemeProvider>
-      <RootLayoutNav />
-    </ThemeProvider>
+    <GestureHandlerRootView style={styles.container}>
+      <ErrorBoundary>
+        <ThemeProvider>
+          <RootLayoutNav />
+        </ThemeProvider>
+      </ErrorBoundary>
+    </GestureHandlerRootView>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+});

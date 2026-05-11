@@ -1,12 +1,19 @@
 import { useEffect } from 'react';
 import { onAuthStateChanged } from 'firebase/auth';
-import { auth, getUserDocument } from '../services/firebase';
+import { auth, getUserDocument, isFirebaseConfigured } from '../services/firebase';
 import { useAuthStore } from '../store/authStore';
 
 export const useAuth = () => {
   const { user, isLoading, setUser, setLoading, clearUser } = useAuthStore();
 
   useEffect(() => {
+    // If Firebase isn't configured, show demo mode
+    if (!isFirebaseConfigured() || !auth) {
+      console.warn('Firebase not configured. Running in demo mode.');
+      setLoading(false);
+      return;
+    }
+
     setLoading(true);
 
     const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
