@@ -1,0 +1,37 @@
+{
+  "expo": {
+    "name": "BotChat",
+    "slug": "botchat",
+    "version": "1.0.0",
+    "scheme": "botchat",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "automatic",
+    "splash": {
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#0084FF"
+    },
+    "plugins": [
+      "expo-router",
+      "expo-font",
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "BotChat needs access to your photos to update your profile picture."
+        }
+      ]
+    ],
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "com.botchat.app"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#0084FF"
+      },
+      "package": "com.botchat.app"
+    }
+  }
+}
